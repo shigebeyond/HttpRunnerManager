@@ -5,6 +5,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from ApiManager.models import TestCaseInfo, ModuleInfo, ProjectInfo, DebugTalk, TestSuite
 from ApiManager.utils.testcase import dump_python_file, dump_yaml_file
 import glob
+import logging
+
+logger = logging.getLogger('HttpRunnerManager')
 
 # 获取目录下yaml文件个数
 def count_yaml_files(path):
@@ -83,7 +86,7 @@ def run_by_single(index, base_url, path):
     # 支持顺序: 文件生成顺序 = 执行顺序 => name前加上序号
     name = str(count_yaml_files(testcase_dir_path) + 1) + name
     path = os.path.join(testcase_dir_path, name + '.yml')
-    print(f'生成yaml: {path}')
+    logger.info(f'生成yaml: {path}')
     dump_yaml_file(path, testcase_list)
 
 

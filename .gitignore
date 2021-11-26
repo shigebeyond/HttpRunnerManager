@@ -12,5 +12,5 @@ Test Report.html
 ApiManager/templatetags/*.pyc
 suite/
 *.pyc
-*.log
+logs/
 *.pid
