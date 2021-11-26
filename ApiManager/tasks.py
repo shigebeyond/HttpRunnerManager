@@ -29,13 +29,14 @@ def load_folder_files2(folder_path, recursive=True):
     return files
 FileUtils.load_folder_files = load_folder_files2
 '''
-
+# 2 改造 TestcaseLoader.load_testsets_by_path() -- 支持加载顺序 -- 成功
 from httprunner.testcase import TestcaseLoader
+
 load_testsets_by_path1 = TestcaseLoader.load_testsets_by_path
 def load_testsets_by_path2(path):
     items = load_testsets_by_path1(path)
     if len(items) > 1:
-        items.sort(key=lambda item:item['config']['path'])
+        items.sort(key=lambda item:item['config']['path']) # 按文件名排序
     return items
 TestcaseLoader.load_testsets_by_path = load_testsets_by_path2
 
