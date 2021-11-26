@@ -15,6 +15,29 @@ from ApiManager.utils.runner import run_by_project, run_by_module, run_by_suite
 from ApiManager.utils.testcase import get_time_stamp
 from httprunner import HttpRunner, logger
 
+# 生成支持顺序: 文件生成顺序 = 执行顺序 => 文件名前加上序号
+# 加载也支持顺序: 按文件名排序
+# 1 改造 FileUtils.load_folder_files() 方法 -- 支持加载顺序 -- 失败
+'''
+from httprunner.utils import FileUtils
+
+load_folder_files1 = FileUtils.load_folder_files
+def load_folder_files2(folder_path, recursive=True):
+    files = load_folder_files1(folder_path, recursive)
+    if len(files) > 1:
+        files.sort()
+    return files
+FileUtils.load_folder_files = load_folder_files2
+'''
+
+from httprunner.testcase import TestcaseLoader
+load_testsets_by_path1 = TestcaseLoader.load_testsets_by_path
+def load_testsets_by_path2(path):
+    items = load_testsets_by_path1(path)
+    if len(items) > 1:
+        items.sort(key=lambda item:item['config']['path'])
+    return items
+TestcaseLoader.load_testsets_by_path = load_testsets_by_path2
 
 @shared_task
 def main_hrun(testset_path, report_name):
