@@ -26,6 +26,9 @@ from ApiManager.utils.task_opt import delete_task, change_task_status
 from ApiManager.utils.testcase import get_time_stamp
 from httprunner import HttpRunner
 
+import zipfile
+from urllib import parse
+
 logger = logging.getLogger('HttpRunnerManager')
 
 # Create your views here.
@@ -274,10 +277,14 @@ def run_batch_test(request):
         else:
             run_by_batch(test_list, base_url, testcase_dir_path)
 
-        runner.run(testcase_dir_path)
-
-        shutil.rmtree(testcase_dir_path)
-        runner.summary = timestamp_to_datetime(runner.summary,type=False)
+        # 是否保存报告到db
+        save_db_report = False
+        if save_db_report:
+            runner = main_hrun(testcase_dir_path, None)
+        else:
+            runner.run(testcase_dir_path)
+            shutil.rmtree(testcase_dir_path)
+            runner.summary = timestamp_to_datetime(runner.summary,type=False)
 
         return render_to_response('report_template.html', runner.summary)
 
@@ -799,3 +806,46 @@ def echo(request):
             for i, line in enumerate(stdout):
                 request.websocket.send(bytes(line, encoding='utf8'))
             client.close()
+
+def zip_yas(startdir, file_news="hrun_case.zip"):
+    '''压缩文件,保存到项目根目录"1case.zip"
+    :param startdir: startdir = ".\\filename"要压缩的文件夹路径
+    :param file_news: file_news = startdir +'.zip' 压缩后文件夹的名字
+    :return:
+    '''
+    z = zipfile.ZipFile(file_news, 'w', zipfile.ZIP_DEFLATED) #参数一：文件夹名
+    for dirpath, dirnames, filenames in os.walk(startdir):
+        fpath = dirpath.replace(startdir, '')  # 这一句很重要，不replace的话，就从根目录开始复制
+        fpath = fpath and fpath + os.sep or '' # 这句话理解我也点郁闷，实现当前文件夹以及包含的所有文件的压缩
+        for filename in filenames:
+            z.write(os.path.join(dirpath, filename), fpath+filename)
+    print('压缩成功')
+    z.close()
+
+def send_zipfile(request):
+    """
+    Create a ZIP file on disk and transmit it in chunks of 8KB,
+    without loading the whole file into memory. A similar approach can
+    be used for large dynamic PDF files.
+    """
+    curpath = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+    suitpath = os.path.join(curpath, "suite")
+    lists = os.listdir(suitpath)
+    lists.sort(key=lambda fn:os.path.getmtime(os.path.join(suitpath,fn)))
+    print("最新文件: "+lists[-1])
+    # 找到最新生成的测试文件
+    new_case_file = os.path.join(suitpath, lists[-1])
+    print('找到最新生成的测试文件: %s' % new_case_file)
+    zip_yas(new_case_file)   # 压缩文件
+
+    # 再次读取zip文件，将文件流返回,但是此时打开方式要以二进制方式打开
+    z_file = open("hrun_case.zip", 'rb')
+    data = z_file.read()
+    z_file.close()
+    response = HttpResponse(data, content_type='application/zip')
+    response['Content-Disposition'] = 'attachment;filename=' + parse.quote("hrun_case.zip")
+    return response
+
+
+
+
