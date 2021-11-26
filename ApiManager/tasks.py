@@ -35,6 +35,7 @@ def main_hrun(testset_path, report_name):
     runner.summary = timestamp_to_datetime(runner.summary)
     report_path = add_test_reports(runner, report_name=report_name)
     os.remove(report_path)
+    return runner
 
 
 @shared_task

@@ -74,7 +74,7 @@ def run_by_single(index, base_url, path):
     if request['test']['request']['url'] != '':
         testcase_list.append(request)
 
-    dump_yaml_file(os.path.join(testcase_dir_path, name + '.yml'), testcase_list)
+    dump_yaml_file(os.path.join(testcase_dir_path, name + '.yml'), testcase_list) # 导出用例yaml
 
 
 def run_by_suite(index, base_url, path):

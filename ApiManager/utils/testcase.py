@@ -18,15 +18,16 @@ def dump_yaml_file(yaml_file, data):
     """ load yaml file and check file content format
     """
     with io.open(yaml_file, 'w', encoding='utf-8') as stream:
-        yaml.dump(data, stream, indent=4, default_flow_style=False, encoding='utf-8')
+        # yaml.dump(data, stream, indent=4, default_flow_style=False, encoding='utf-8')
+        yaml.dump(data, stream, indent=4, default_flow_style=False, encoding='utf-8',allow_unicode=True)
 
 
 def _dump_json_file(json_file, data):
     """ load json file and check file content format
     """
     with io.open(json_file, 'w', encoding='utf-8') as stream:
-        json.dump(data, stream, indent=4, separators=(',', ': '), ensure_ascii=False)
-
+        # json.dump(data, stream, indent=4, separators=(',', ': '), ensure_ascii=False)
+        json.dump(data, stream, indent=4, separators=(',', ': '), default_flow_style=False,encoding='utf-8',allow_unicode=True)
 
 def dump_python_file(python_file, data):
     with io.open(python_file, 'w', encoding='utf-8') as stream:

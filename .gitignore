@@ -10,3 +10,7 @@ pyunitreport/__pycache__/
 BeautifulReport/__pycache__/
 Test Report.html
 ApiManager/templatetags/*.pyc
+suite/
+*.pyc
+*.log
+*.pid
