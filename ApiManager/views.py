@@ -277,14 +277,9 @@ def run_batch_test(request):
         else:
             run_by_batch(test_list, base_url, testcase_dir_path)
 
-        # 是否保存报告到db
-        save_db_report = False
-        if save_db_report:
-            runner = main_hrun(testcase_dir_path, None)
-        else:
-            runner.run(testcase_dir_path)
-            shutil.rmtree(testcase_dir_path)
-            runner.summary = timestamp_to_datetime(runner.summary,type=False)
+        runner.run(testcase_dir_path)
+        shutil.rmtree(testcase_dir_path)
+        runner.summary = timestamp_to_datetime(runner.summary,type=False)
 
         return render_to_response('report_template.html', runner.summary)
 
@@ -832,10 +827,10 @@ def send_zipfile(request):
     suitpath = os.path.join(curpath, "suite")
     lists = os.listdir(suitpath)
     lists.sort(key=lambda fn:os.path.getmtime(os.path.join(suitpath,fn)))
-    print("最新文件: "+lists[-1])
+    logger.info("最新文件: "+lists[-1])
     # 找到最新生成的测试文件
     new_case_file = os.path.join(suitpath, lists[-1])
-    print('找到最新生成的测试文件: %s' % new_case_file)
+    logger.info('找到最新生成的测试文件: %s' % new_case_file)
     zip_yas(new_case_file)   # 压缩文件
 
     # 再次读取zip文件，将文件流返回,但是此时打开方式要以二进制方式打开
