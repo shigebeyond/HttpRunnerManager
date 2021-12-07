@@ -51,7 +51,8 @@ Key Features
         djcelery.setup_loader()
         CELERY_ENABLE_UTC = True
         CELERY_TIMEZONE = 'Asia/Shanghai'
-        BROKER_URL = 'amqp://guest:guest@127.0.0.1:5672//'  # 127.0.0.1即为rabbitmq-server所在服务器ip地址
+        #BROKER_URL = 'amqp://guest:guest@127.0.0.1:5672//'  # rabbitmq-server地址
+        BROKER_URL = 'redis://192.168.0.184/6'  # redis-server地址
         CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
         CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
         CELERY_ACCEPT_CONTENT = ['application/json']
@@ -67,25 +68,25 @@ Key Features
 
 6. 命令行窗口切换到HttpRunnerManager目录 生成数据库迁移脚本,并生成表结构
     ```bash
-        python manage.py makemigrations ApiManager #生成数据迁移脚本
-        python manage.py migrate  #应用到db生成数据表
+        python3 manage.py makemigrations ApiManager #生成数据迁移脚本
+        python3 manage.py migrate  #应用到db生成数据表
     ```
 
 7. 创建超级用户，用户后台管理数据库，并按提示输入相应用户名，密码，邮箱。 如不需用，可跳过此步骤
     ```bash
-        python manage.py createsuperuser
+        python3 manage.py createsuperuser
     ```
 
 8. 启动服务,
     ```bash
-        python manage.py runserver 0.0.0.0:8000
+        python3 manage.py runserver 0.0.0.0:8000
     ```
 
 9. 启动worker, 如果选择同步执行并确保不会使用到定时任务，那么此步骤可忽略
     ```bash
-        python manage.py celery -A HttpRunnerManager worker --loglevel=info  #启动worker
-        python manage.py celery beat --loglevel=info #启动定时任务监听器
-        celery flower #启动任务监控后台
+        python3 manage.py celery -A HttpRunnerManager worker --loglevel=info  #启动worker
+        python3 manage.py celery beat --loglevel=info #启动定时任务监听器
+        celery flower --address=0.0.0.0 --port=5555 --broker=redis://192.168.0.184/6 #启动任务监控后台
     ```
 
 10. 访问：http://localhost:5555/dashboard 即可查看任务列表和状态
