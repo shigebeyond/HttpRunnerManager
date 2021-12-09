@@ -19,4 +19,7 @@ COPY ./ /apps/HttpRunnerManager/
 EXPOSE 8080 5555
 
 # 启动命令
-ENTRYPOINT ["/apps/HttpRunnerManager/start.sh"]
+# 1 启动容器后, 进入容器bash手动启动 start.sh
+ENTRYPOINT ["/bin/sh", "-c", "while true; do sleep 100; done"] # 让进程一直跑, 否则容器会exit
+# 2 自动启动
+#ENTRYPOINT ["/apps/HttpRunnerManager/start.sh -a"]
