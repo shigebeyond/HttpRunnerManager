@@ -437,3 +437,5 @@ Traceback (most recent call last):
 ValueError: invalid literal for int() with base 10: '用例_quant_login_out(登入登出)'
 2018-07-02 14:59:50,449 [HttpRunnerManager:78] [views:log_out] [INFO]- yinquanwang退出
 2018-07-02 14:59:52,333 [HttpRunnerManager:45] [views:login] [INFO]- yinquanwang 登录成功
+2021-12-07 11:12:54,101 [HttpRunnerManager:58] [views:login] [INFO]- qqq 鐧诲綍鎴愬姛
+2021-12-07 14:54:43,747 [HttpRunnerManager:58] [views:login] [INFO]- qqq 鐧诲綍鎴愬姛
