@@ -14,9 +14,12 @@ MAINTAINER HttpRunnerManager
 # 由于add/copy的文件必须使用上下文目录的内容, 因此要先将xxx文件拷贝到当前目录
 # https://www.367783.net/hosting/5025.html
 COPY ./ /apps/HttpRunnerManager/
-RUN pip install -r /apps/HttpRunnerManager/requirements.txt \
+
+# 安装依赖，-i是指定国内镜像
+RUN pip install -r /apps/HttpRunnerManager/requirements.txt -i http://mirrors.aliyun.com/pypi/simple/ \
     && pip uninstall -y tornado \
-    && pip install tornado==5.1.1
+    && pip install tornado==5.1.1 -i http://mirrors.aliyun.com/pypi/simple/
+
 # 暴露端口, 跟HttpRunnerManager端口一样
 EXPOSE 8080 5555
 
