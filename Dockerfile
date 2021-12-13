@@ -15,10 +15,10 @@ MAINTAINER HttpRunnerManager
 # https://www.367783.net/hosting/5025.html
 COPY ./ /apps/HttpRunnerManager/
 
-# 安装依赖，-i是指定国内镜像
-RUN pip install -r /apps/HttpRunnerManager/requirements.txt -i http://mirrors.aliyun.com/pypi/simple/ \
+# 安装依赖
+RUN pip install -r /apps/HttpRunnerManager/requirements.txt \
     && pip uninstall -y tornado \
-    && pip install tornado==5.1.1 -i http://mirrors.aliyun.com/pypi/simple/
+    && pip install tornado==5.1.1
 
 # 暴露端口, 跟HttpRunnerManager端口一样
 EXPOSE 8080 5555
