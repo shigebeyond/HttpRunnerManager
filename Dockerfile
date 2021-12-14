@@ -15,16 +15,16 @@ MAINTAINER HttpRunnerManager
 # https://www.367783.net/hosting/5025.html
 COPY ./ /apps/HttpRunnerManager/
 
-# 安装依赖
-RUN pip install -r /apps/HttpRunnerManager/requirements.txt \
+# 安装依赖, -i指定豆瓣仓库
+RUN pip install -r /apps/HttpRunnerManager/requirements.txt -i https://pypi.douban.com/simple \
     && pip uninstall -y tornado \
-    && pip install tornado==5.1.1
+    && pip install tornado==5.1.1 -i https://pypi.douban.com/simple
 
 # 暴露端口, 跟HttpRunnerManager端口一样
 EXPOSE 8080 5555
 
 # 启动命令
 # 1 启动容器后, 进入容器bash手动启动 start.sh -- 直接 docker run -t 添加-t参数即可
-#CMD ["/bin/sh", "-c", "while true; do sleep 100; done"] # 让进程一直跑, 否则容器会exit
+CMD ["/bin/sh", "-c", "while true; do sleep 100; done"] # 让进程一直跑, 否则容器会exit
 # 2 自动启动
-ENTRYPOINT ["/apps/HttpRunnerManager/start.sh"]
+#ENTRYPOINT ["/apps/HttpRunnerManager/start.sh"]
