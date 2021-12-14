@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  hrunmgr:
+    build: .
+    image: hrunmgr:latest
+    container_name: hrunmgr
+    network_mode: host
+    environment:
+      - TZ=Asia/Shanghai
+    ports:
+      - "8080:8080"
+      - "5555:5555"
+    volumes: # 映射目录， 方便读写
+      - ./:/apps/HttpRunnerManager
+    command: "/bin/sh", "-c", "while true; do sleep 100; done" # 让进程一直跑, 否则容器会exit
+    entrypoint: /apps/HttpRunnerManager/start.sh
+
