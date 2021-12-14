@@ -49,7 +49,7 @@ def main_hrun(testset_path, report_name):
     :return:
     """
     logger.setup_logger('INFO')
-    logger.info(f'异步执行用例目录: {testset_path} => 生成报告: {report_name}')
+    print(f'异步执行用例目录: {testset_path} => 生成报告: {report_name}')
     kwargs = {
         "failfast": False,
     }
