@@ -1,0 +1,23 @@
+# 基础镜像
+FROM silverlogic/python3.6
+
+# 描述
+MAINTAINER HttpRunnerManager
+
+# 定义匿名数据卷, 挂到/var/lib/docker/tmp/
+# 必须是容器内部路径, 不能是宿主路径
+# 如果要使用宿主路径, 请在 docker run时用-v做好宿主与容器的路径映射
+# https://blog.csdn.net/fangford/article/details/88873104
+#VOLUME "/data1"
+
+# 复制文件
+# 由于add/copy的文件必须使用上下文目录的内容, 因此要先将xxx文件拷贝到当前目录
+# https://www.367783.net/hosting/5025.html
+COPY requirements.txt requirements.txt
+
+# 安装依赖, -i指定豆瓣仓库
+RUN pip install -r requirements.txt -i https://pypi.douban.com/simple \
+    && pip uninstall -y tornado \
+    && pip install tornado==5.1.1 -i https://pypi.douban.com/simple
+
+# HttpRunnerManager目录映射+端口暴露+命令等，都在 docker-compose.yml 中实现
