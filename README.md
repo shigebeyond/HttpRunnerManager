@@ -52,7 +52,7 @@ Key Features
         CELERY_ENABLE_UTC = True
         CELERY_TIMEZONE = 'Asia/Shanghai'
         #BROKER_URL = 'amqp://guest:guest@127.0.0.1:5672//'  # rabbitmq-server地址
-        BROKER_URL = 'redis://192.168.0.184/6'  # redis-server地址
+        BROKER_URL = 'redis://127.0.0.1'  # redis-server地址
         CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
         CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
         CELERY_ACCEPT_CONTENT = ['application/json']
@@ -86,7 +86,7 @@ Key Features
     ```bash
         python3 manage.py celery -A HttpRunnerManager worker --loglevel=info  #启动worker
         python3 manage.py celery beat --loglevel=info #启动定时任务监听器
-        celery flower --address=0.0.0.0 --port=5555 --broker=redis://192.168.0.184/6 #启动任务监控后台
+        celery flower --address=0.0.0.0 --port=5555 --broker=redis://127.0.0.1 #启动任务监控后台
     ```
 
 10. 访问：http://localhost:5555/dashboard 即可查看任务列表和状态

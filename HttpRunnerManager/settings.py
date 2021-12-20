@@ -119,8 +119,8 @@ if DEBUG:
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'hrun',  # 新建数据库名
             'USER': 'root',  # 数据库登录名
-            'PASSWORD': 'test_server_db!',  # 数据库登录密码
-            'HOST': '192.168.0.182',  # 数据库所在服务器ip地址
+            'PASSWORD': '123456',  # 数据库登录密码
+            'HOST': 'localhost',  # 数据库所在服务器ip地址
             'PORT': '3306',  # 监听端口 默认3306即可
         }
     }
@@ -131,10 +131,10 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'HttpRunner',  # 新建数据库名
+            'NAME': 'hrun',  # 新建数据库名
             'USER': 'root',  # 数据库登录名
-            'PASSWORD': 'Hst888888',  # 数据库登录密码
-            'HOST': '192.168.91.45',  # 数据库所在服务器ip地址
+            'PASSWORD': '123456',  # 数据库登录密码
+            'HOST': 'localhost',  # 数据库所在服务器ip地址
             'PORT': '3306',  # 监听端口 默认3306即可
         }
     }
@@ -155,7 +155,7 @@ CELERY_TIMEZONE = 'Asia/Shanghai'
 # rabbitmq
 # BROKER_URL = 'amqp://admin:123456@192.168.1.x:5672//' if DEBUG else 'amqp://dev:zwc123@192.168.1.x:5672//'
 # redis
-BROKER_URL = 'redis://192.168.0.184/6'
+BROKER_URL = 'redis://127.0.0.1'
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 CELERY_ACCEPT_CONTENT = ['application/json']
