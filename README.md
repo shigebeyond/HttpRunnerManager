@@ -6,6 +6,12 @@ Design Philosophy
 
 基于HttpRunner的接口自动化测试平台: `HttpRunner`_, `djcelery`_ and `Django`_. HttpRunner手册: http://cn.httprunner.org/
 
+最新改动
+------------
+1. 支持同一个模块内用例执行有序
+2. 支持用redis做mq
+3. 修复静态文件站点`cdn.bootcss.com`停用的问题
+
 Key Features
 ------------
 
