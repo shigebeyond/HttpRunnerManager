@@ -216,6 +216,12 @@
                                         <span class="am-icon-bug"></span>
                                     </button>
                                     <button type="button"
+                                            class="am-btn am-btn-default am-btn-xs am-text-secondary am-round"
+                                            data-am-popover="{content: '生成locust命令', trigger: 'hover focus'}"
+                                            onclick="gen_locust('{{ foo.id }}')">
+                                        <span class="am-icon-drupal"></span>
+                                    </button>
+                                    <button type="button"
                                             class="am-btn am-btn-default am-btn-xs am-text-danger am-round"
                                             data-am-popover="{content: '复制', trigger: 'hover focus'}"
                                             onclick="copy('#copy_list', '{{ foo.id }}')"><span
@@ -316,6 +322,32 @@
                         'id': index,
                         'env_name': $('#env_name').val()
                     })
+                },
+                onCancel: function () {
+                }
+            });
+        }
+
+        function gen_locust(index) {
+            $('#select_env').modal({
+                relatedTarget: this,
+                onConfirm: function () {
+                    var data = {
+                        'id': index,
+                        'env_name': $('#env_name').val()
+                    }
+                    $.ajax({
+                        type: 'post',
+                        url: '/api/gen_locust/',
+                        data: data,
+                        contentType: "application/x-www-form-urlencoded",
+                        success: function (data) {
+                            myAlert(data);
+                        },
+                        error: function () {
+                            myAlert('Sorry，服务器可能开小差啦, 请重试!');
+                        }
+                    });
                 },
                 onCancel: function () {
                 }

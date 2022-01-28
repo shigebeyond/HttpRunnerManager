@@ -25,6 +25,7 @@ from ApiManager.utils.runner import run_by_batch, run_test_by_type
 from ApiManager.utils.task_opt import delete_task, change_task_status
 from ApiManager.utils.testcase import get_time_stamp
 from httprunner import HttpRunner
+from httprunner.utils import FileUtils
 
 import zipfile
 from urllib import parse
@@ -241,6 +242,32 @@ def run_test(request):
         runner.summary = timestamp_to_datetime(runner.summary, type=False)
 
         return render_to_response('report_template.html', runner.summary)
+
+@login_check
+def gen_locust(request):
+    """
+    生成locust命令
+    :param request:
+    :return:
+    """
+
+    kwargs = {
+        "failfast": False,
+    }
+    runner = HttpRunner(**kwargs)
+
+    testcase_dir_path = os.path.join(os.getcwd(), "suite")
+    testcase_dir_path = os.path.join(testcase_dir_path, get_time_stamp())
+
+    id = request.POST.get('id')
+    base_url = request.POST.get('env_name')
+    type = request.POST.get('type', 'test')
+
+    run_test_by_type(id, base_url, testcase_dir_path, type)
+    runner.run(testcase_dir_path)
+
+    files = FileUtils.load_folder_files(testcase_dir_path)
+    return HttpResponse(f'locust命令: locusts -f "{files[0]}" -P 9999')
 
 
 @login_check

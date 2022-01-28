@@ -11,6 +11,7 @@ Design Philosophy
 1. 支持同一个模块内用例执行有序
 2. 支持用redis做mq
 3. 修复静态文件站点`cdn.bootcss.com`停用的问题
+4. 支持单个用例输出locust命令
 
 Key Features
 ------------
