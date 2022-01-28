@@ -243,6 +243,7 @@ def run_test(request):
 
         return render_to_response('report_template.html', runner.summary)
 
+# 生成locust命令
 @login_check
 def gen_locust(request):
     """
@@ -263,9 +264,11 @@ def gen_locust(request):
     base_url = request.POST.get('env_name')
     type = request.POST.get('type', 'test')
 
+    # 生成用例yaml文件
     run_test_by_type(id, base_url, testcase_dir_path, type)
     runner.run(testcase_dir_path)
 
+    # 输出locust命令，指定yaml文件
     files = FileUtils.load_folder_files(testcase_dir_path)
     return HttpResponse(f'locust命令: locusts -f "{files[0]}" -P 9999')
 
