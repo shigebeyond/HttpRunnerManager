@@ -9,3 +9,4 @@ dwebsocket == 0.4.2
 paramiko == 2.4.1
 HttpRunner == 1.5.8
 redis == 2.10.6
+curlify == 2.2.1

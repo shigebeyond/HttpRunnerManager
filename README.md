@@ -12,6 +12,7 @@ Design Philosophy
 2. 支持用redis做mq
 3. 修复静态文件站点`cdn.bootcss.com`停用的问题
 4. 支持单个用例输出locust命令
+5. 支持打印curl
 
 Key Features
 ------------

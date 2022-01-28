@@ -40,6 +40,18 @@ def load_testsets_by_path2(path):
     return items
 TestcaseLoader.load_testsets_by_path = load_testsets_by_path2
 
+# 3 改造 httprunner.client.HttpSession.request() -- 支持打印curl
+from httprunner.client import HttpSession
+import curlify
+
+request1 = HttpSession.request
+def request2(self, method, url, name=None, **kwargs):
+    res = request1(self, method, url, name, **kwargs)
+    cmd = curlify.to_curl(res.request)
+    print('发送请求：' + cmd)
+    return res
+HttpSession.request = request2
+
 @shared_task
 def main_hrun(testset_path, report_name):
     """
