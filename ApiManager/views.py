@@ -266,7 +266,7 @@ def gen_locust(request):
 
     # 生成用例yaml文件
     run_test_by_type(id, base_url, testcase_dir_path, type)
-    runner.run(testcase_dir_path)
+    #runner.run(testcase_dir_path)
 
     # 输出locust命令，指定yaml文件
     files = FileUtils.load_folder_files(testcase_dir_path)
