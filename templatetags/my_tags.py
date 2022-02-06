@@ -27,11 +27,17 @@ def to_curl(request, compressed=False, verify=True): # request是dict
     for k, v in sorted(request['headers'].items()):
         parts += [('-H', '{0}: {1}'.format(k, v))]
 
-    if request['body']:
+    if 'body' in request:
         body = request['body']
         if isinstance(body, bytes):
             body = body.decode('utf-8')
         parts += [('-d', body)]
+    elif 'data' in request:
+        data = request['data']
+        query_string = ''
+        for k, v in data.items():
+            query_string += f"{k}={v}&"
+        parts += [('-d', query_string)]
 
     if compressed:
         parts += [('--compressed', None)]
