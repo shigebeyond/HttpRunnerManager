@@ -48,6 +48,7 @@
         </div>
     </div>
 
+    <!-- 跳转请求的选择环境 -->
     <div class="am-modal am-modal-confirm" tabindex="-1" id="select_env">
         <div class="am-modal-dialog">
             <div class="am-modal-hd">HttpRunnerManager</div>
@@ -57,6 +58,32 @@
                            style="font-weight: inherit; font-size: small ">运行环境:</label>
                     <div class="col-sm-8">
                         <select class="form-control" id="env_name" name="env_name">
+                            <option value="">自带环境</option>
+                            {% for foo in env %}
+                                <option value="{{ foo.base_url }}">{{ foo.env_name }}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+                </div>
+            </form>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 非跳转(ajax)请求的选择环境 -->
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="select_env2">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">HttpRunnerManager</div>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-sm-3"
+                           style="font-weight: inherit; font-size: small ">运行环境:</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" id="env_name2" name="env_name">
                             <option value="">自带环境</option>
                             {% for foo in env %}
                                 <option value="{{ foo.base_url }}">{{ foo.env_name }}</option>
@@ -278,6 +305,7 @@
                 $('#select_env').modal({
                         relatedTarget: this,
                         onConfirm: function () {
+                            console.log('my_submit')
                             var data = $("#test_list").serializeJSON();
                             var json2map = JSON.stringify(data);
                             var obj = JSON.parse(json2map);
@@ -318,6 +346,7 @@
             $('#select_env').modal({
                 relatedTarget: this,
                 onConfirm: function () {
+                    console.log('run_test: ' + index)
                     post('/api/run_test/', {
                         'id': index,
                         'env_name': $('#env_name').val()
@@ -329,12 +358,19 @@
         }
 
         function gen_locust(index) {
-            $('#select_env').modal({
+             console.log('gen_locust click: ' + index)
+             // 无跳转的多次调用，但仅首次绑定的回调函数有效，因此不能直接引用index，挂到window.gen_locust_index，需在回调函数中读取
+             window.gen_locust_index = index
+             // 无跳转的多次调用，不能使用#select_env
+             $('#select_env2').modal({
                 relatedTarget: this,
                 onConfirm: function () {
+                    // 多次调用，但仅首次绑定的回调函数有效，因此不能直接引用index，挂到window.gen_locust_index，需在回调函数中读取
+                    var index = window.gen_locust_index;
+                    console.log('gen_locust post: ' + index)
                     var data = {
                         'id': index,
-                        'env_name': $('#env_name').val()
+                        'env_name': $('#env_name2').val()
                     }
                     $.ajax({
                         type: 'post',
