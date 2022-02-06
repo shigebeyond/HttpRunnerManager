@@ -30,7 +30,7 @@
         }
     </style>
 </head>
-
+{% load my_tags %}
 <body class='extent standard default hide-overflow dark'>
 <div id='theme-selector' alt='切换主题，默认黑色' title='切换主题'>
     <span><i class='material-icons'>desktop_windows</i></span>
@@ -294,6 +294,12 @@
                                             </tr>
                                             </thead>
                                             <tbody>
+                                            <tr class='info' status='info'>
+                                                <td class='status info' title='info' alt='info'><i
+                                                        class='material-icons'>low_priority</i></td>
+                                                <td class='timestamp'>curl</td>
+                                                <td class='step-details'>{% to_curl record.meta_data.request %}</td>
+                                            </tr>
                                             <tr class='info' status='info'>
                                                 <td class='status info' title='info' alt='info'><i
                                                         class='material-icons'>low_priority</i></td>
