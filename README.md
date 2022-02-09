@@ -15,6 +15,7 @@ Design Philosophy
 ![locust命令](images/locust_cmd.png)<br>
 5. 支持打印curl命令，与在报告中显示curl命令，方便重现
 ![curl命令](images/curl_cmd.png)<br>
+6. 制作docker镜像
 
 Key Features
 ------------
