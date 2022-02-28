@@ -16,6 +16,7 @@ Design Philosophy
 5. 支持打印curl命令，与在报告中显示curl命令，方便重现
 ![curl命令](images/curl_cmd.png)<br>
 6. 制作docker镜像
+7. fix bug: 发送不了带data的get请求
 
 Key Features
 ------------
