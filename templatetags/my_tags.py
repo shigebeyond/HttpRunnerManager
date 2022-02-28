@@ -32,7 +32,7 @@ def to_curl(request, compressed=False, verify=True): # request是dict
         if isinstance(body, bytes):
             body = body.decode('utf-8')
         parts += [('-d', body)]
-    elif 'data' in request:
+    elif 'data' in request and request['data']:
         data = request['data']
         query_string = ''
         for k, v in data.items():

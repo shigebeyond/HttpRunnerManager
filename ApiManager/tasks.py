@@ -47,13 +47,14 @@ import curlify
 request1 = HttpSession.request
 def request2(self, method, url, name=None, **kwargs):
     # fix bug： get请求不能传递data， 否则会导致以下问题： get请求的data会被转为body，请求会多出content-length请求头，而client又不发body，从而导致： 1 HttpSession请求时server会接收不到data对应的请求参数 2 curl请求时server一直在等待body
-    if method.upper() == 'GET' and kwargs['data'] != None:
+    if method.upper() == 'GET' and 'data' in kwargs and kwargs['data']:
+        data = kwargs['data']
         # 将data转为query string
         if '?' in url:
             query_string = '&'
         else:
             query_string = '?'
-        for k, v in kwargs['data'].items():
+        for k, v in data.items():
             query_string += f"{k}={v}&"
         url += query_string
         kwargs['data'] = None
