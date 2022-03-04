@@ -40,7 +40,7 @@ def load_testsets_by_path2(path):
     return items
 TestcaseLoader.load_testsets_by_path = load_testsets_by_path2
 
-# 3 改造 httprunner.client.HttpSession.request() -- 支持打印curl + fix get请求不能传递data
+# 3 改造 httprunner.client.HttpSession.request() -- 支持打印curl + fix get请求不能传递data + fix不能传递cookie
 from httprunner.client import HttpSession
 import curlify
 
@@ -58,6 +58,11 @@ def request2(self, method, url, name=None, **kwargs):
             query_string += f"{k}={v}&"
         url += query_string
         kwargs['data'] = None
+
+    # fix bug: 不能传递cookie
+    if 'headers' in kwargs and 'cookie' in kwargs['headers']:
+        cookie = kwargs['headers']['cookie']
+        kwargs['cookies'] = dict([l.split("=", 1) for l in cookie.split("; ")]) # cookie字符串转化为字典
 
     res = request1(self, method, url, name, **kwargs)
     # 打印curl
