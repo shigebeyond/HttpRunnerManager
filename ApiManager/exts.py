@@ -53,3 +53,13 @@ def request2(self, method, url, name=None, **kwargs):
     print('发送请求：' + cmd)
     return res
 HttpSession.request = request2
+
+# 4 改造 TestCase.runTest() -- 支持报告(meta_data)输出提取的变量
+from httprunner.task import TestCase
+
+runTest1 = TestCase.runTest
+def runTest2(self):
+    runTest1(self)
+    # 在meta_data中记录提取的变量
+    self.meta_data["variables"] = self.test_runner.context.testset_shared_variables_mapping
+TestCase.runTest = runTest2

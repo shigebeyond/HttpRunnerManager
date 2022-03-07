@@ -380,6 +380,19 @@
                                                 </td>
                                             </tr>
 
+                                            <tr class='log' status='pass'>
+                                                <td class='status pass' title='pass' alt='pass'><i
+                                                        class='material-icons'>low_priority</i></td>
+                                                <td class='timestamp'>variables</td>
+                                                <td class='step-details'>
+                                                    {% for k, v in record.meta_data.variables.items %}
+                                                        <div>
+                                                            <strong>{{ k }}:</strong>{{ v }}
+                                                        </div>
+                                                    {% endfor %}
+                                                </td>
+                                            </tr>
+
                                             <tr class='info' status='info'>
                                                 <td class='status info' title='info' alt='info'><i
                                                         class='material-icons'>low_priority</i></td>

@@ -17,7 +17,8 @@ Design Philosophy
 ![curl命令](images/curl_cmd.png)<br>
 6. 制作docker镜像
 7. fix bug: 发送不了带data的get请求
-7. fix bug: 请求不能带cookie
+8. fix bug: 请求不能带cookie
+9. 支持在报告中输出提取的变量
 
 Key Features
 ------------
