@@ -27,7 +27,7 @@ def to_curl(request, compressed=False, verify=True): # request是dict
     for k, v in sorted(request['headers'].items()):
         parts += [('-H', '{0}: {1}'.format(k, v))]
 
-    if 'body' in request:
+    if 'body' in request and request['body']:
         body = request['body']
         if isinstance(body, bytes):
             body = body.decode('utf-8')
