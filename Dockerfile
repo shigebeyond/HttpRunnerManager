@@ -1,5 +1,5 @@
 # 基础镜像 python3.6-mysql5.6-redis
-FROM registry.cn-hangzhou.aliyuncs.com/hw_wei/hrunmgr:1.0
+FROM registry.cn-hangzhou.aliyuncs.com/hw_wei/py_mysql_redis:1.0
 
 # 描述
 MAINTAINER HttpRunnerManager
