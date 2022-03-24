@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   hrunmgr:
-    image: 192.168.0.182:5000/hrunmgr:$version
+    image: 192.168.0.182:5000/hrunmgr:{tag}
     container_name: hrunmgr
     network_mode: host
     environment:
