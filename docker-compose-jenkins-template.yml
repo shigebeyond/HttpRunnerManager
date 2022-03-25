@@ -4,11 +4,11 @@ services:
     # 这是jenkins发版打包的镜像，上传到私有仓库192.168.0.182
     image: 192.168.0.182:5000/hrunmgr:{tag}
     container_name: hrunmgr
-    network_mode: host
     environment:
       - TZ=Asia/Shanghai
-    # ports: # 内部用，不向宿主机暴露
-    expose: # 向宿主机暴露
+    #network_mode: host
+    #只暴露2个端口
+    ports:
       - "8080:8080"
       - "5555:5555"
 
